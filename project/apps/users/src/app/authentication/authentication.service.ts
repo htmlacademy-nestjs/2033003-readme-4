@@ -1,5 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { BlogUserMemoryRepository } from '../blog-user/blog-user-memory.repository';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UserRole } from 'libs/shared/app-types/src';
+import dayjs from 'dayjs';
+import { AUTH_USER_EXISTS } from './authentication.constant';
+import { BlogUserEntity } from '../blog-user/blog-user.entity';
 
 @Injectable()
 export class AuthenticationService {
@@ -7,4 +12,26 @@ export class AuthenticationService {
     private readonly blogUserRepository: BlogUserMemoryRepository
   ) {}
 
+  public async register(dto: CreateUserDto) {
+    const {email, firstname, lastname, password, avatar, dateRegister} = dto;
+
+    const blogUser = {
+      email, firstname, lastname, role: UserRole.User,
+      avatar: avatar, dateRegister: dayjs(dateRegister).toDate(),
+      passwordHash: ''
+    };
+
+    const existUser = await this.blogUserRepository
+      .findByEmail(email);
+
+    if (existUser) {
+      throw new ConflictException(AUTH_USER_EXISTS);
+    }
+
+    const userEntity = await new BlogUserEntity(blogUser)
+      .setPassword(password)
+
+    return this.blogUserRepository
+      .create(userEntity);
+  }
 }
