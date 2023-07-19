@@ -12,6 +12,7 @@ export class UserRdo {
 
   @Expose()
   public lastname: string;
+
   @Expose()
   public dateRegister: string;
 

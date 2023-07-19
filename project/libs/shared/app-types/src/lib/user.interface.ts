@@ -7,5 +7,6 @@ export interface User{
   lastname: string;
   passwordHash: string;
   avatar: string;
+  dateRegister: string;
   role: UserRole;
 }

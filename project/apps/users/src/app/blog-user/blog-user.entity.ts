@@ -9,6 +9,7 @@ export class BlogUserEntity implements User {
   lastname: string;
   passwordHash: string;
   avatar: string;
+  dateRegister: string;
   role: UserRole;
 
   constructor(blogUser: User) {
@@ -23,6 +24,7 @@ export class BlogUserEntity implements User {
       lastname: this.lastname,
       passwordHash: this.passwordHash,
       avatar: this.avatar,
+      dateRegister: this.dateRegister,
       role: this.role,
     };
   }
@@ -34,6 +36,7 @@ export class BlogUserEntity implements User {
     this.lastname = blogUser.lastname;
     this.passwordHash = blogUser.passwordHash;
     this.avatar = blogUser.avatar;
+    this.dateRegister = blogUser.dateRegister;
     this.role = blogUser.role;
   }
 
