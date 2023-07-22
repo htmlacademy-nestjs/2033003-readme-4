@@ -26,10 +26,10 @@ export class CreateUserDto {
   public password: string;
 
   @ApiProperty({
-    description: 'User date register (ISO format)',
-    example: '2012-02-21T20:00:00.000Z'
+    description: 'User date register',
+    example: '2023-07-25T12:00:00Z'
   })
-  public dateRegister: string;
+  public dateRegister: Date;
 
   @ApiProperty({
     description: 'User avatar',

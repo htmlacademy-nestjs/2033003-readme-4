@@ -31,11 +31,11 @@ export class UserRdo {
   public lastname: string;
 
   @ApiProperty({
-    description: 'User date register (ISO format)',
+    description: 'User date register',
     example: '2012-02-21T20:00:00.000Z'
   })
   @Expose()
-  public dateRegister: string;
+  public dateRegister: Date;
 
   @ApiProperty({
     description: 'User avatar path',

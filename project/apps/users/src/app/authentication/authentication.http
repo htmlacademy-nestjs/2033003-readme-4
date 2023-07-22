@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
   "email": "user@notfound.local",
-  "dateRegister": "2012-02-22",
+  "dateRegister": "2023-07-25T12:00:00Z",
   "firstname": "Keks",
   "lastname": "Smith",
   "password": "123456",
