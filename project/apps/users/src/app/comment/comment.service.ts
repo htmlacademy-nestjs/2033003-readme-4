@@ -23,15 +23,7 @@ export class CommentService {
     const comment = {
       text,
       createdAt: dayjs().toDate(),
-      author: {
-        email: '',
-        firstname: '',
-        lastname: '', 
-        passwordHash: '',
-        avatar: '', 
-        dateRegister: dayjs().toDate(),
-        role: UserRole.User
-      },
+      author: undefined, //handle author assignment later,
       publicationId,
     };
 
@@ -40,18 +32,19 @@ export class CommentService {
     return this.commentRepository.create(commentEntity);
   }
 
-  public async delete(commentId: string, userId: string) {
+  public async delete(commentId: string, userId: string): Promise<boolean> {
     const comment = await this.commentRepository.findById(commentId);
 
     if (!comment) {
-      throw new NotFoundException('Comment not found');
+      return false;
     }
 
     if (comment.author._id !== userId) {
-      throw new UnauthorizedException('You are not authorized to delete this comment');
+      return false;
     }
 
-    return this.commentRepository.destroy(commentId);
+    await this.commentRepository.destroy(commentId);
+    return true;
   }
 
   public async findCommentsByPublication(publicationId: string, limit: number): Promise<Comment[]> {

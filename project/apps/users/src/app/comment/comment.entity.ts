@@ -1,4 +1,4 @@
-import { User, UserRole, Comment } from '@project/shared/app-types';
+import { User, Comment } from '@project/shared/app-types';
 
 export class CommentEntity implements Comment {
   _id?: string;

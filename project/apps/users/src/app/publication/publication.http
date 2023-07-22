@@ -1,0 +1,35 @@
+# Create a new publication
+POST http://localhost:3000/api/publication
+Content-Type: application/json
+
+{
+  "title": "Awesome Publication",
+  "tags": ["tag1", "tag2"],
+  "type": "text",
+  "excerpt": "This is a short excerpt of the publication.",
+  "content": "This is the main content of the publication.",
+  "createdAt": "2023-07-20T12:00:00Z",
+  "publishedAt": "2023-07-20T12:00:00Z",
+  "state": "published"
+}
+
+###
+
+# Get publication by ID
+GET http://localhost:3000/api/publication/393c1868-010d-4bdd-beac-d202625fa2e5
+
+###
+
+# Update publication by ID
+PUT http://localhost:3000/api/publication/393c1868-010d-4bdd-beac-d202625fa2e5
+Content-Type: application/json
+
+{
+  "type": "video",
+  "videoLink": "https://www.youtube.com/watch?v=your-video-id"
+}
+
+###
+
+# Delete publication by ID
+DELETE http://localhost:3000/api/publication/393c1868-010d-4bdd-beac-d202625fa2e5

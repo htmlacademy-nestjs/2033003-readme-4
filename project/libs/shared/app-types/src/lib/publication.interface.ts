@@ -1,12 +1,21 @@
-import { PublicationType } from "./publication-type.enum";
+import { User, PublicationState, PublicationType } from '@project/shared/app-types';
 
-interface BasePublication {
-  id: string;
+export interface BasePublication {
+  _id?: string;
   title: string;
   tags?: string[];
   createdAt: Date;
   publishedAt: Date;
   state: PublicationState;
+  author?: User;
+  type?: PublicationType;
+  videoLink?: string;
+  excerpt?: string;
+  content?: string;
+  quoteText?: string;
+  photo?: string;
+  url?: string;
+  description?: string;
 }
 
 interface VideoPublication extends BasePublication {
@@ -23,7 +32,7 @@ interface TextPublication extends BasePublication {
 interface QuotePublication extends BasePublication {
   type: PublicationType.Quote;
   quoteText: string;
-  author: string;
+  author: User;
 }
 
 interface PhotoPublication extends BasePublication {
