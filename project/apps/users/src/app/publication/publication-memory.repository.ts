@@ -1,5 +1,5 @@
 import { CRUDRepository } from '@project/util/util-types';
-import { BasePublication, Comment } from '@project/shared/app-types';
+import { BasePublication } from '@project/shared/app-types';
 import { randomUUID } from 'node:crypto';
 import { Injectable } from '@nestjs/common';
 import { PublicationEntity } from './publication.entity';

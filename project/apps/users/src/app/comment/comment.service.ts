@@ -1,11 +1,10 @@
-import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { Comment } from '@project/shared/app-types';
 import { CommentMemoryRepository } from './comment-memory.repository';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { COMMENT_TEXT_MIN_LENGTH, COMMENT_TEXT_MAX_LENGTH } from './comment.constant';
 import { CommentEntity } from './comment.entity';
 import dayjs from 'dayjs';
-import { UserRole } from 'libs/shared/app-types/src';
 
 @Injectable()
 export class CommentService {

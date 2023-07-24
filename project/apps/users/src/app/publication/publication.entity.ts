@@ -1,5 +1,4 @@
 import { BasePublication, PublicationState, PublicationType, User } from '@project/shared/app-types';
-import { BlogUserEntity } from '../blog-user/blog-user.entity';
 
 export class PublicationEntity {
   _id?: string;

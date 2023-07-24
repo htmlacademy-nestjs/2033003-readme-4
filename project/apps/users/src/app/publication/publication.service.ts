@@ -3,7 +3,6 @@ import { PublicationMemoryRepository } from './publication-memory.repository';
 import { BasePublication, PublicationType } from '@project/shared/app-types';
 import { CreatePublicationDto } from './dto/create-publication.dto';
 import { PublicationEntity } from './publication.entity';
-import dayjs from 'dayjs';
 
 @Injectable()
 export class PublicationService {
@@ -12,7 +11,7 @@ export class PublicationService {
   ) {}
 
   async createPublication(dto: CreatePublicationDto) {
-    const { title, tags, type, videoLink, excerpt, content, quoteText, author, photo, url, description, createdAt, publishedAt, state } = dto;
+    const { title, tags, type, videoLink, excerpt, content, quoteText, photo, url, description, createdAt, publishedAt, state } = dto;
   
     const publication: BasePublication = {
       title,
