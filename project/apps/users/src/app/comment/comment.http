@@ -1,0 +1,26 @@
+# Create a new comment
+POST http://localhost:3000/api/comments HTTP/1.1
+Content-Type: application/json
+
+{
+  "text": "This is a new comment.",
+  "publicationId": "798efa44-670a-4769-ad20-1531aaa2f18c"
+}
+
+###
+
+# Get comments by publication ID with limit
+GET http://localhost:3000/api/comments/798efa44-670a-4769-ad20-1531aaa2f18c HTTP/1.1
+
+###
+
+# Get new comments after lastCommentId with limit
+GET http://localhost:3000/api/comments/798efa44-670a-4769-ad20-1531aaa2f18c/next/90a422e9-f12f-491d-a203-4ddd707f105c?limit=3 HTTP/1.1
+Content-Type: application/json
+
+###
+
+# Delete comment by ID
+DELETE  http://localhost:3000/api/comments/3530f0cb-30f1-421e-9e06-fbb8dc267823 HTTP/1.1
+
+###
