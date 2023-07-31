@@ -58,14 +58,15 @@ export class CommentRepository implements CRUDRepository<CommentEntity, string, 
   }
 
   public async findNextComments(lastCommentId: string, limit: number): Promise<Comment[]> {
-    const allComments: Comment[] = await this.findAll();
-    const startIndex = allComments.findIndex((comment) => comment._id === lastCommentId);
+    const lastComment = await this.commentModel.findById(lastCommentId).exec();
+      if (!lastComment) {
+        return null;
+      }
 
-    if (startIndex === -1) {
-      return null;
-    }
-
-    const nextComments: Comment[] = allComments.slice(startIndex + 1, startIndex + 1 + limit);
+    const nextComments = await this.commentModel
+    .find({ createdAt: { $gt: lastComment.createdAt }, publicationId: lastComment.publicationId })
+      .limit(limit)
+      .exec();
 
     return nextComments;
   }

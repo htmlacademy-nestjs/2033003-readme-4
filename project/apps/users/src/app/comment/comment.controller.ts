@@ -64,7 +64,7 @@ export class CommentController {
     status: HttpStatus.NOT_FOUND,
     description: 'Publication not found',
   })
-  @Get('next/:lastCommentId')
+  @Get(':publicationId/next/:lastCommentId')
   public async findNextComments(
     @Param('lastCommentId') lastCommentId: string,
     @Query('limit') limit?: number,

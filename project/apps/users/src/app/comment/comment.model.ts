@@ -20,6 +20,9 @@ export class CommentModel extends Document implements Comment{
   })
   text: string;
 
+  @Prop()
+  createdAt: Date
+
   @Prop({
     required: true
   })
