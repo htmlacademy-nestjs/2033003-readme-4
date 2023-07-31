@@ -8,6 +8,12 @@ export class CreateCommentDto {
   public publicationId: string;
 
   @ApiProperty({
+    description: 'Author ID for which the comment is created',
+    example: '123456789',
+  })
+  public authorId: string;
+
+  @ApiProperty({
     description: 'Text of the comment',
     example: 'Great post!',
   })

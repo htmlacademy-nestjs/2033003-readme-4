@@ -16,8 +16,6 @@ export class AuthenticationService {
     private readonly databaseConfig: ConfigType<typeof dbConfig>,
     private readonly blogUserRepository: BlogUserRepository,
   ) {
-    console.log(databaseConfig.host);
-    console.log(databaseConfig.user);
   }
 
   public async register(dto: CreateUserDto) {

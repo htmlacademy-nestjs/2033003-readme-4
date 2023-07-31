@@ -2,8 +2,9 @@ import { User, Comment } from '@project/shared/app-types';
 
 export class CommentEntity implements Comment {
   _id?: string;
+  publicationId: string;
   text: string;
-  author: User;
+  authorId: string;
   createdAt: Date;
 
   constructor(comment: Comment) {
@@ -13,16 +14,18 @@ export class CommentEntity implements Comment {
   public toObject() {
     return {
       _id: this._id,
+      publicationId: this.publicationId,
       text: this.text,
-      author: this.author,
+      authorId: this.authorId,
       createdAt: this.createdAt,
     };
   }
 
   public fillEntity(comment: Comment) {
     this._id = comment._id;
+    this.publicationId = comment.publicationId;
     this.text = comment.text;
-    this.author = comment.author;
+    this.authorId = comment.authorId;
     this.createdAt = comment.createdAt;
   }
 }

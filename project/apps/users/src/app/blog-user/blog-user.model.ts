@@ -31,9 +31,6 @@ export class BlogUserModel extends Document implements User {
   @Prop()
   public avatar: string;
 
-  @Prop()
-  public dateRegister: Date;
-
   @Prop({
     required: true,
     type: String,

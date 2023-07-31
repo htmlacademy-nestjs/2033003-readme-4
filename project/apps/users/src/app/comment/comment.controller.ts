@@ -90,8 +90,9 @@ export class CommentController {
   })
   @Delete(':id')
   public async delete(@Param('id') id: string): Promise<void> {
-    const userId = undefined; // user ID from the authentication process
+    const userId = '64c7e9594191fd8963465142'; // user ID from the authentication process
     const isDeleted = await this.commentService.delete(id, userId);
+
     if (!isDeleted) {
       throw new NotFoundException('Comment not found');
     }
