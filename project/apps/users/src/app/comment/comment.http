@@ -10,6 +10,16 @@ Content-Type: application/json
 
 ###
 
+# Update comment by ID
+PUT http://localhost:3003/api/comments/64c7fe8e660070b372aca467 HTTP/1.1
+Content-Type: application/json
+
+{
+  "text": "This is a updated comment..."
+}
+
+###
+
 # Get comments by publication ID with limit
 GET http://localhost:3003/api/comments/798efa44-670a-4769-ad20-1531aaa2f18c HTTP/1.1
 

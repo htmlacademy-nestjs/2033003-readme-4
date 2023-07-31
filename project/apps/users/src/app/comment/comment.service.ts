@@ -1,10 +1,11 @@
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { Comment } from '@project/shared/app-types';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { COMMENT_TEXT_MIN_LENGTH, COMMENT_TEXT_MAX_LENGTH } from './comment.constant';
 import { CommentEntity } from './comment.entity';
 import dayjs from 'dayjs';
 import { CommentRepository } from './comment.repository';
+import { UpdateCommentDto } from './dto/update-comment.dto';
 
 @Injectable()
 export class CommentService {
@@ -33,14 +34,13 @@ export class CommentService {
 
   public async delete(commentId: string, userId: string): Promise<boolean> {
     const comment = await this.commentRepository.findById(commentId);
-    console.log(commentId)
-    console.log(userId)
+
     if (!comment) {
       return false;
     }
 
     if (comment.authorId !== userId) {
-      throw new UnauthorizedException('You are not authorized to delete this comment');
+      throw new ForbiddenException('You are not authorized to delete this comment');
     }
 
     await this.commentRepository.destroy(commentId);
@@ -58,5 +58,20 @@ export class CommentService {
     }
 
     return comments;
+  }
+
+  public async updateComment(id: string, userId: string, comment: UpdateCommentDto): Promise<Comment> {
+    const commentData = await this.commentRepository.findById(id);
+      
+    if (!commentData) {
+      throw new NotFoundException('Comment not found');
+    }
+  
+    if (commentData.authorId !== userId) {
+      throw new ForbiddenException('You are not authorized to update this comment');
+    }
+  
+    const updatedComment = await this.commentRepository.update(id, comment);
+    return updatedComment;
   }
 }

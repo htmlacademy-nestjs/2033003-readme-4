@@ -1,10 +1,13 @@
 import { CommentRdo } from './rdo/comment.rdo';
-import { BadRequestException, Body, Controller, Delete, Get, HttpStatus, NotFoundException, Param, Post, Query } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, HttpStatus, NotFoundException, Param, Post, Put, Query } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { CommentService } from './comment.service';
 import { DEFAULT_LIMIT } from './comment.constant';
+import { CommentEntity } from './comment.entity';
+import { UpdateCommentDto } from './dto/update-comment.dto';
+import { Comment } from '@project/shared/app-types';
 
 @ApiTags('comment')
 @Controller('comments')
@@ -88,6 +91,10 @@ export class CommentController {
     status: HttpStatus.NOT_FOUND,
     description: 'Comment not found',
   })
+  @ApiResponse({
+    status: HttpStatus.FORBIDDEN,
+    description: 'You are not authorized to delete this comment',
+  })
   @Delete(':id')
   public async delete(@Param('id') id: string): Promise<void> {
     const userId = '64c7e9594191fd8963465142'; // user ID from the authentication process
@@ -96,5 +103,25 @@ export class CommentController {
     if (!isDeleted) {
       throw new NotFoundException('Comment not found');
     }
+  }
+
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Comment found',
+    type: CommentRdo,
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'Comment not found',
+  })
+  @ApiResponse({
+    status: HttpStatus.FORBIDDEN,
+    description: 'You are not authorized to update this comment',
+  })
+  @Put(':id')
+  public async updateComment(@Param('id') id: string, @Body() dto: UpdateCommentDto): Promise<Comment> {
+      const userId = '64c7e9594191fd8963465142'; // user ID from the authentication process
+      const updatedComment = await this.commentService.updateComment(id, userId, dto);
+      return updatedComment;
   }
 }

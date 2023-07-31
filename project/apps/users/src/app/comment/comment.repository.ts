@@ -1,10 +1,11 @@
 import { CRUDRepository } from '@project/util/util-types';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Comment } from '@project/shared/app-types';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { CommentEntity } from './comment.entity';
 import { CommentModel } from './comment.model';
+import { UpdateCommentDto } from './dto/update-comment.dto';
 
 @Injectable()
 export class CommentRepository implements CRUDRepository<CommentEntity, string, Comment> {
@@ -37,10 +38,18 @@ export class CommentRepository implements CRUDRepository<CommentEntity, string, 
       .exec();
   }
 
-  public async update(id: string, item: CommentEntity): Promise<Comment> {
-    return this.commentModel
-      .findByIdAndUpdate(id, item.toObject(), { new: true })
-      .exec();
+  public async update(id: string, commentData: UpdateCommentDto): Promise<CommentModel> {
+    const existingComment = await this.commentModel.findByIdAndUpdate(
+      id,
+      { $set: commentData },
+      { new: true },
+    );
+
+    if (!existingComment) {
+      throw new NotFoundException('Comment not found');
+    }
+
+    return existingComment;
   }
 
   public async findCommentsByPublication(publicationId: string, limit: number): Promise<Comment[]> {
