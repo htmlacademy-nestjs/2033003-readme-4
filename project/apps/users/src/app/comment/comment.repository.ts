@@ -44,8 +44,12 @@ export class CommentRepository implements CRUDRepository<CommentEntity, string, 
   }
 
   public async findCommentsByPublication(publicationId: string, limit: number): Promise<Comment[]> {
-    const comments = Object.values(this.commentModel).filter((comment) => comment._id === publicationId);
+    const comments = await this.commentModel
+        .find({ publicationId })
+        .limit(limit)
+        .exec();
 
+    console.log(comments)
     if (limit) {
       return comments.slice(0, limit);
     }

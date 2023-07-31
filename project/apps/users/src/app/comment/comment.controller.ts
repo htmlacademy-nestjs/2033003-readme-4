@@ -42,7 +42,7 @@ export class CommentController {
     status: HttpStatus.NOT_FOUND,
     description: 'Publication not found',
   })
-  @Get()
+  @Get(':id')
   public async find(@Param('id') id: string, @Query('limit') limit?: number) {
     try {
       if (!limit) {

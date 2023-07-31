@@ -11,7 +11,7 @@ Content-Type: application/json
 ###
 
 # Get comments by publication ID with limit
-GET http://localhost:3003/api/comments/798efa44-670a-4769-ad20-1531aaa2f18c HTTP/1.1
+GET http://localhost:3003/api/comments/798efa44-670a-4769-ad20-1531aaa2f18c?limit=3 HTTP/1.1
 
 ###
 
