@@ -6,14 +6,10 @@ import { AUTH_USER_EXISTS, AUTH_USER_NOT_FOUND, AUTH_USER_PASSWORD_WRONG } from 
 import { BlogUserEntity } from '../blog-user/blog-user.entity';
 import { LoginUserDto } from './dto/login-user.dto';
 import { UserRole } from '@project/shared/app-types';
-import { ConfigType } from '@nestjs/config';
-import { dbConfig } from '@project/config/config-users';
 
 @Injectable()
 export class AuthenticationService {
   constructor(
-    @Inject(dbConfig.KEY)
-    private readonly databaseConfig: ConfigType<typeof dbConfig>,
     private readonly blogUserRepository: BlogUserRepository,
   ) {
   }
@@ -28,7 +24,7 @@ export class AuthenticationService {
     };
 
     const existUser = await this.blogUserRepository
-      .findByEmail(email);
+      .findUnique(email);
 
     if (existUser) {
       throw new ConflictException(AUTH_USER_EXISTS);
@@ -43,7 +39,7 @@ export class AuthenticationService {
 
   public async verifyUser(dto: LoginUserDto) {
     const {email, password} = dto;
-    const existUser = await this.blogUserRepository.findByEmail(email);
+    const existUser = await this.blogUserRepository.findUnique(email);
 
     if (!existUser) {
       throw new NotFoundException(AUTH_USER_NOT_FOUND);
@@ -58,6 +54,6 @@ export class AuthenticationService {
   }
 
   public async getUser(id: string) {
-    return this.blogUserRepository.findById(id);
+    return this.blogUserRepository.findUnique(id);
   }
 }

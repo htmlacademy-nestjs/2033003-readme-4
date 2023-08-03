@@ -5,13 +5,11 @@ services:
     restart: always
     container_name: readme.users.mongo
 
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: test
-      MONGO_INITDB_DATABASE: readme-users
+    env_file:
+      - .users.env
 
     ports:
-      - 27017:27017
+      - ${MONGO_EXPOSED_PORT}:${MONGO_PORT}
 
     volumes:
       - readme.mongo.users:/data/db
@@ -27,11 +25,7 @@ services:
     restart: always
     container_name: readme.user.mongo.ui
     ports:
-      - 8081:8081
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
-      ME_CONFIG_MONGODB_ADMINPASSWORD: test
-      ME_CONFIG_MONGODB_URL: mongodb://admin:test@readme.users.mongo:27017/
+      - ${MONGO_UI_EXPOSED_PORT}:${MONGO_UI_PORT}
 
 volumes:
   readme.mongo.users:

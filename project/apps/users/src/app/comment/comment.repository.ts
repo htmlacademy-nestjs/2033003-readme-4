@@ -53,17 +53,13 @@ export class CommentRepository implements CRUDRepository<CommentEntity, string, 
   }
 
   public async findCommentsByPublication(publicationId: string, limit: number): Promise<Comment[]> {
-    const comments = await this.commentModel
-        .find({ publicationId })
-        .limit(limit)
-        .exec();
+    const query = this.commentModel.find({ publicationId });
 
-    console.log(comments)
     if (limit) {
-      return comments.slice(0, limit);
+      query.limit(limit);
     }
 
-    return comments;
+    return await query.exec();
   }
 
   public async findNextComments(lastCommentId: string, limit: number): Promise<Comment[]> {
@@ -72,8 +68,14 @@ export class CommentRepository implements CRUDRepository<CommentEntity, string, 
         return null;
       }
 
-    const nextComments = await this.commentModel
-    .find({ createdAt: { $gt: lastComment.createdAt }, publicationId: lastComment.publicationId })
+      const nextComments = await this.commentModel
+      .find({
+        $and: [
+          { _id: { $gt: lastCommentId } },
+          { _id: { $ne: lastCommentId } },
+          { publicationId: lastComment.publicationId }
+        ]
+      })
       .limit(limit)
       .exec();
 

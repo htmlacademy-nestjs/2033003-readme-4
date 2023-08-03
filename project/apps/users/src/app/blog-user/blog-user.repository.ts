@@ -1,4 +1,5 @@
 import { CRUDRepository } from '@project/util/util-types';
+import { isEmail } from '@project/util/util-core';
 import { Injectable } from '@nestjs/common';
 import { BlogUserEntity } from './blog-user.entity';
 import { User } from '@project/shared/app-types';
@@ -27,10 +28,12 @@ export class BlogUserRepository implements CRUDRepository<BlogUserEntity, string
       .exec();
   }
 
-  public async findByEmail(email: string): Promise<User | null> {
-    return this.blogUserModel
-      .findOne({ email })
-      .exec();
+  public async findUnique(searchParam: string): Promise<User | null> {
+    if (isEmail(searchParam)) {
+      return this.blogUserModel.findOne({ email: searchParam });
+    } else {
+      return this.blogUserModel.findOne({ _id: searchParam });
+    }
   }
 
   public async update(id: string, item: BlogUserEntity): Promise<User> {
