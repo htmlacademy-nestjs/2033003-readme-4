@@ -1,21 +1,24 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateCommentDto {
+export class UpdateCommentDto {
   @ApiProperty({
-    description: 'Publication ID for which the comment is created',
+    description: 'Publication ID for which the comment is updated',
     example: '123456789',
+    required: true,
   })
   public publicationId: string;
 
   @ApiProperty({
-    description: 'Author ID for which the comment is created',
+    description: 'Author ID for which the comment is updated',
     example: '123456789',
+    required: true,
   })
   public authorId: string;
 
   @ApiProperty({
     description: 'Text of the comment',
-    example: 'Great post!',
+    example: 'Updated comment text',
+    required: true,
   })
   public text: string;
 }
