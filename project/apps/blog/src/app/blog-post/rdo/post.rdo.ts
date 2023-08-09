@@ -1,0 +1,35 @@
+import { BasePublication, PublicationState, PublicationType, Comment  } from '@project/shared/app-types';
+
+export class PostRdo implements BasePublication {
+  _id: string;
+
+  title: string;
+
+  tags?: string[];
+
+  createdAt: Date;
+
+  publishedAt: Date;
+
+  state: PublicationState;
+
+  userId?: string;
+
+  type: PublicationType;
+
+  videoLink?: string;
+
+  excerpt?: string;
+
+  content?: string;
+
+  quoteText?: string;
+
+  photo?: string;
+
+  url?: string;
+
+  description?: string;
+
+  comments: Comment[]
+}

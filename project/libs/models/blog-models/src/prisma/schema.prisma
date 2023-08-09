@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output = "../../../../../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Comment {
+  commentId   Int      @id @default(autoincrement()) @map("comment_id")
+  text        String   @default("")
+  postId      Int      @map("post_id")
+  userId      String?  @map("user_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+  post        Post     @relation(fields: [postId], references: [postId], onDelete: Cascade, onUpdate: Cascade)
+  @@map("comments")
+}
+
+model Favorite {
+  favoriteId Int      @id @default(autoincrement()) @map("favorite_id")
+  post       Post     @relation(fields: [postId], references: [postId], onDelete: Cascade)
+  postId     Int      @map("post_id")
+  userId     String   @map("user_id")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @default(now()) @updatedAt @map("updated_at")
+  @@map("favorites")
+}
+
+model Post {
+  postId      Int      @id @default(autoincrement()) @map("post_id")
+  title       String   @default("")
+  createdAt   DateTime @default(now()) @map("created_at")
+  publishAt   DateTime @updatedAt @map("publish_at")
+  userId      String?  @map("user_id")
+  tags        String[]
+  comments    Comment[]
+  favorite    Favorite[]
+  type        PublicationType
+  videoLink   String?  @default("")
+  excerpt     String?  @default("")
+  content     String?  @default("")
+  quoteText   String?  @default("")
+  photo       String?  @default("")
+  url         String?  @default("")
+  description String?  @default("")
+  state       PublicationState
+  @@map("posts")
+}
+
+enum PublicationState {
+  Published
+  Draft
+}
+
+enum PublicationType {
+  Video
+  Text
+  Quote
+  Photo
+  Link
+}

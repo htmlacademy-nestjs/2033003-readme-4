@@ -16,5 +16,5 @@
   ],
   "include": [
     "src/**/*.ts"
-  ]
+, "../blog/src/app/blog-post/post.service.ts", "../blog/src/app/blog-post/post.module.ts", "../blog/src/app/blog-post/post.controller.ts", "../blog/src/app/blog-post/post.constant.ts"  ]
 }

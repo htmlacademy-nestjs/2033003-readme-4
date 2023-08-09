@@ -1,9 +1,10 @@
-import { User, Comment } from '@project/shared/app-types';
+import { Comment } from '@prisma/client';
 
 export class CommentEntity implements Comment {
   _id?: string;
   text: string;
-  author: User;
+  userId: string;
+  postId: number;
   createdAt: Date;
 
   constructor(comment: Comment) {
@@ -14,7 +15,8 @@ export class CommentEntity implements Comment {
     return {
       _id: this._id,
       text: this.text,
-      author: this.author,
+      userId: this.userId,
+      postId: this.postId,
       createdAt: this.createdAt,
     };
   }
@@ -22,7 +24,8 @@ export class CommentEntity implements Comment {
   public fillEntity(comment: Comment) {
     this._id = comment._id;
     this.text = comment.text;
-    this.author = comment.author;
+    this.userId = comment.userId;
+    this.postId = comment.postId;
     this.createdAt = comment.createdAt;
   }
 }

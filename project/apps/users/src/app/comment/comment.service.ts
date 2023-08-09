@@ -22,8 +22,9 @@ export class CommentService {
     const comment = {
       text,
       createdAt: dayjs().toDate(),
-      author: undefined, //handle author assignment later,
-      publicationId,
+      userId: undefined, //handle author assignment later,
+      postId: undefined,
+      publicationId
     };
 
     const commentEntity = await new CommentEntity(comment);
@@ -38,7 +39,7 @@ export class CommentService {
       return false;
     }
 
-    if (comment.author._id !== userId) {
+    if (comment.userId !== userId) {
       return false;
     }
 
