@@ -1,0 +1,31 @@
+version: '3.5'
+services:
+  readme.comments.mongo:
+    image: mongo
+    restart: always
+    container_name: readme.comments.mongo
+
+    env_file:
+      - .comments.env
+
+    ports:
+      - ${MONGO_EXPOSED_PORT}:${MONGO_PORT}
+
+    volumes:
+      - readme.mongo.comments:/data/db
+
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/readme-comments --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  typeoteka.user.mongo.ui:
+    image: mongo-express
+    restart: always
+    container_name: readme.comments.mongo.ui
+    ports:
+      - ${MONGO_UI_EXPOSED_PORT}:${MONGO_UI_PORT}
+
+volumes:
+  readme.mongo.comments:
